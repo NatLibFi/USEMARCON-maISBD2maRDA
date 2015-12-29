@@ -1,0 +1,32 @@
+MARC 21 (RDA) --> MARC 21 (ISBD)
+Kansalliskirjasto / 28.12.2015 (TV)
+
+001   | <DEL    | S
+
+003   | <DEL    | S
+
+264I1 | 260I1   | S
+264I2 | 260I2   | ' '
+264   | 260     | S
+
+336I1 | 336I1   | S
+336I2 | 336I2   | S
+336$a | 336$a   | Table ('Sisaltotyypit_336.tbl')
+336$b | <DEL    | S
+336$2 | <DEL    | S
+
+337I1 | 337I1   | S
+337I2 | 337I2   | S
+337$a | 337$a   | Table ('Mediatyypit_337.tbl')
+337$b | <DEL    | S
+337$2 | <DEL    | S
+
+338I1 | <DELI1  | S
+338I2 | <DELI2  | S
+338   | <DEL    | S
+
+#if (TAG != 'DEL')
+???I1           | ???I1           | S
+???I2           | ???I2           | S
+???             | ???             | S
+#endif
