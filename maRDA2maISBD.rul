@@ -1,9 +1,31 @@
 MARC 21 (RDA) --> MARC 21 (ISBD)
-Kansalliskirjasto / 28.12.2015 (TV)
+Kansalliskirjasto / 29.12.2015 (TV)
+
+000/1-18/ | 000/1-18/ | S
+000/19/   | 000/19/ | 'i'
+000/20-24/  | 000/20-24/  | S
 
 001   | <DEL    | S
 
 003   | <DEL    | S
+
+#if (RegFind(@040$e, 'rda') >= 0) \
+     And (Exists(@040$a) Or Exists(@040$b) Or Exists(@040$c) Or Exists(@040$d))
+040I1 | 040I1   | S
+040I2 | 040I2   | S
+040$e | <DEL    | S
+040$? | 040$?   | S
+#endif
+
+#if (RegFind(@040$e, 'rda') < 0)
+040I1 | 040I1   | S
+040I2 | 040I2   | S
+040$? | 040$?   | S
+#endif
+
+222I1 | 222I1   | S
+222I2 | 222I2   | S
+222   | 222     | S; RegReplace('verkkoaineisto', 'verkkojulkaisu')
 
 264I1 | 260I1   | S
 264I2 | 260I2   | ' '
@@ -24,6 +46,30 @@ Kansalliskirjasto / 28.12.2015 (TV)
 338I1 | <DELI1  | S
 338I2 | <DELI2  | S
 338   | <DEL    | S
+
+530I1 | 530I1 | S
+530I2 | 530I2 | S
+530   | 530   | S; RegReplace('Verkkoaineisto', 'Verkkojulkaisu'); \
+                   RegReplace('verkkoaineistona', verkkojulkaisuna')
+
+76?I1 | 76?I1 | S
+76?I2 | 76?I2 | S
+76?$c | 76?$c | S; RegReplace('verkkoaineisto', 'verkkojulkaisu')
+76?   | 76?   | S
+
+77?I1 | 77?I1 | S
+77?I2 | 77?I2 | S
+77?$c | 77?$c | S; RegReplace('verkkoaineisto', 'verkkojulkaisu')
+77?   | 77?   | S
+
+78?I1 | 78?I1 | S
+78?I2 | 78?I2 | S
+78?$c | 78?$c | S; RegReplace('verkkoaineisto', 'verkkojulkaisu')
+78?   | 78?   | S
+
+856I1 | 856I1 | S
+856I2 | 856I2 | S
+856   | 856   | S; RegReplace('verkkoaineistoon', 'verkkojulkaisuun')
 
 #if (TAG != 'DEL')
 ???I1           | ???I1           | S
