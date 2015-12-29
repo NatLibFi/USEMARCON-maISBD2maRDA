@@ -1,4 +1,4 @@
-# MARC 21 (RDA) --> MARC 21 (ISBD)
+MARC 21 (RDA) --> MARC 21 (ISBD)
 ========
 USEMARCON-ohjelmalla käytettävä konversiosääntö MARC 21 (RDA) -muotoisten bibliografisten ja auktoriteettitietueiden muuttamiseksi ISBD-kuvailusääntöjen mukaisiksi.
 
