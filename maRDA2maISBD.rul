@@ -1,13 +1,41 @@
 MARC 21 (RDA) --> MARC 21 (ISBD)
 Kansalliskirjasto / 4.1.2016 (TV)
 
+#define macro LYHENTEET | Replace('painos' By 'p.'); \
+                          Replace('karttoja' By 'kartt.'); \
+                          Replace('kuvitettu' By 'kuv.'); \
+                          Replace('sivua' By 's.'); \
+                          Replace('painos' By 'p.')
+
 000/1-18/ | 000/1-18/ | S
 000/19/   | 000/19/ | 'i'
-000/20-24/  | 000/20-24/  | S
+000/20-24/  | 000/20-24/ | S
 
 001   | <DEL    | S
 
 003   | <DEL    | S
+
+015I1 | 015I1 | S
+015I2 | 015I2 | S
+015$q | 015$q | Replace('.,' By ',');
+                Delete('(');
+                Delete(')');
+                Delete('.', At Ending);
+                Table ('Sidosasut.tbl')
+015$? | 015$? | S
+
+020I1 | 020I1 | S
+020I2 | 020I2 | S
+020$a | 020$a | S; RegReplace('[\\s](.*)', '')
+020$a | 020$q | If (RegFind(@020$a, '\\(') >= 0) Then S;
+                RegReplace('(.*)\\(', ''); RegReplace('\\)', '');
+                Table ('Sidosasut.tbl')
+020$c | <DEL  | S
+020$? | 020$? | Replace('.,' By ',');
+                Delete('(');
+                Delete(')');
+                Delete('.', At Ending);
+                Table ('Sidosasut.tbl')
 
 #if (RegFind(@040$e, 'rda') >= 0) \
      And (Exists(@040$a) Or Exists(@040$b) Or Exists(@040$c) Or Exists(@040$d))
@@ -23,9 +51,41 @@ Kansalliskirjasto / 4.1.2016 (TV)
 040$? | 040$?   | S
 #endif
 
+100I1 | 100I1   | S
+100I2 | 100I2   | S
+100$e | 100$e   | Table ('Funktiotermien_lyhennys.tbl')
+100$? | 100$?   | S
+
+110I1 | 110I1   | S
+110I2 | 110I2   | S
+110$e | 110$e   | Table ('Funktiotermien_lyhennys.tbl')
+110$? | 110$?   | S
+
+111I1 | 111I1   | S
+111I2 | 111I2   | S
+111$e | 111$e   | Table ('Funktiotermien_lyhennys.tbl')
+111$? | 111$?   | S
+
 222I1 | 222I1   | S
 222I2 | 222I2   | S
 222   | 222     | S; RegReplace('verkkoaineisto', 'verkkojulkaisu')
+
+250I1 | 250I1   | S
+250I2 | 250I2   | S
+250   | 250     | LYHENTEET
+
+#if Not (@260(n)I2 = '3')
+260I1 | 260I1    | ' '
+260I2 | 260I2    | ' '
+260$a | 260$a    | S; Delete (':', At Ending); Delete (',', At Ending); Delete ('.', At Ending); Delete (';', At Ending)
+260$b | 260$b    | S; Delete (',', At Ending); Delete (':', At Ending); Delete ('.', At Ending); Delete (';', At Ending)
+260$c | 260$c    | S; Delete ('.', At Ending); Delete (';', At Ending); Delete ('['); Delete (']')
+#endif
+
+#if (@260(n)I2 = '3')
+260(n)$a | 260(no)$e    | '(' + S
+260(n)$b | 260(no)$f    | S + ')'
+#endif
 
 #if Not (@264(n)I2 = '3')
 264I1 | 260I1    | ' '
@@ -36,9 +96,13 @@ Kansalliskirjasto / 4.1.2016 (TV)
 #endif
 
 #if (@264(n)I2 = '3')
-264(n)$a | 260(no)$e    | S
-264(n)$b | 260(no)$f    | S
+264(n)$a | 260(no)$e    | '(' + S
+264(n)$b | 260(no)$f    | S + ')'
 #endif
+
+300I1 | 300I1   | S
+300I2 | 300I2   | S
+300   | 300     | LYHENTEET
 
 336I1 | 336I1   | S
 336I2 | 336I2   | S
@@ -60,6 +124,41 @@ Kansalliskirjasto / 4.1.2016 (TV)
 530I2 | 530I2 | S
 530   | 530   | S; RegReplace('Verkkoaineisto', 'Verkkojulkaisu'); \
                    RegReplace('verkkoaineistona', verkkojulkaisuna')
+
+600I1 | 600I1   | S
+600I2 | 600I2   | S
+600$e | 600$e   | Table ('Funktiotermien_lyhennys.tbl')
+600$? | 600$?   | S
+
+610I1 | 610I1   | S
+610I2 | 610I2   | S
+610$e | 610$e   | Table ('Funktiotermien_lyhennys.tbl')
+610$? | 610$?   | S
+
+611I1 | 611I1   | S
+611I2 | 611I2   | S
+611$e | 611$e   | Table ('Funktiotermien_lyhennys.tbl')
+611$? | 611$?   | S
+
+700I1 | 700I1   | S
+700I2 | 700I2   | S
+700$e | 700$e   | Table ('Funktiotermien_lyhennys.tbl')
+700$? | 700$?   | S
+
+710I1 | 710I1   | S
+710I2 | 710I2   | S
+710$e | 710$e   | Table ('Funktiotermien_lyhennys.tbl')
+710$? | 710$?   | S
+
+711I1 | 711I1   | S
+711I2 | 711I2   | S
+711$e | 711$e   | Table ('Funktiotermien_lyhennys.tbl')
+711$? | 711$?   | S
+
+720I1 | 720I1   | S
+720I2 | 720I2   | S
+720$e | 720$e   | Table ('Funktiotermien_lyhennys.tbl')
+720$? | 720$?   | S
 
 76?I1 | 76?I1 | S
 76?I2 | 76?I2 | S
