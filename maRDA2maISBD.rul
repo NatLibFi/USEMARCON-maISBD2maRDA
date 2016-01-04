@@ -1,5 +1,5 @@
 MARC 21 (RDA) --> MARC 21 (ISBD)
-Kansalliskirjasto / 29.12.2015 (TV)
+Kansalliskirjasto / 4.1.2016 (TV)
 
 000/1-18/ | 000/1-18/ | S
 000/19/   | 000/19/ | 'i'
@@ -27,9 +27,18 @@ Kansalliskirjasto / 29.12.2015 (TV)
 222I2 | 222I2   | S
 222   | 222     | S; RegReplace('verkkoaineisto', 'verkkojulkaisu')
 
-264I1 | 260I1   | S
-264I2 | 260I2   | ' '
-264   | 260     | S
+#if Not (@264(n)I2 = '3')
+264I1 | 260I1    | ' '
+264I2 | 260I2    | ' '
+264$a | 260$a    | S; Delete (':', At Ending); Delete (',', At Ending); Delete ('.', At Ending); Delete (';', At Ending)
+264$b | 260$b    | S; Delete (',', At Ending); Delete (':', At Ending); Delete ('.', At Ending); Delete (';', At Ending)
+264$c | 260$c    | S; Delete ('.', At Ending); Delete (';', At Ending); Delete ('['); Delete (']')
+#endif
+
+#if (@264(n)I2 = '3')
+264(n)$a | 260(no)$e    | S
+264(n)$b | 260(no)$f    | S
+#endif
 
 336I1 | 336I1   | S
 336I2 | 336I2   | S

@@ -2,7 +2,7 @@ MARC 21 (RDA) --> MARC 21 (ISBD)
 ========
 USEMARCON-ohjelmalla käytettävä konversiosääntö MARC 21 (RDA) -muotoisten bibliografisten ja auktoriteettitietueiden muuttamiseksi ISBD-kuvailusääntöjen mukaisiksi.
 
-Konversiopakettia käytetään ISBD-kuvailusääntöjen mukaisten tietueiden poimimiseen Melinda- ja Fennica-tietokannoissa ns. YAZ-proxyn kautta. Myös muut käyttötarkoitukset ovat mahdollisia.
+Konversiopakettia käytetään ISBD-kuvailusääntöjen mukaisten tietueiden poimimiseen Melinda- ja Fennica-tietokannoista ns. YAZ-proxyn kautta. Myös muut käyttötarkoitukset ovat mahdollisia.
 
 Kehitys
 -------
