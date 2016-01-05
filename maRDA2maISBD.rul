@@ -1,5 +1,5 @@
 MARC 21 (RDA) --> MARC 21 (ISBD)
-Kansalliskirjasto / 4.1.2016 (TV)
+Kansalliskirjasto / 6.1.2016 (TV)
 
 #define macro LYHENTEET | Replace('painos' By 'p.'); \
                           Replace('karttoja' By 'kartt.'); \
