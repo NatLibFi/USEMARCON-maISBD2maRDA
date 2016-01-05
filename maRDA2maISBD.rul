@@ -3,6 +3,7 @@ Kansalliskirjasto / 4.1.2016 (TV)
 
 #define macro LYHENTEET | Replace('painos' By 'p.'); \
                           Replace('karttoja' By 'kartt.'); \
+                          Replace('nuotteja' By 'nuott.'); \
                           Replace('kuvitettu' By 'kuv.'); \
                           Replace('sivua' By 's.'); \
                           Replace('painos' By 'p.')
@@ -50,21 +51,6 @@ Kansalliskirjasto / 4.1.2016 (TV)
 040I2 | 040I2   | S
 040$? | 040$?   | S
 #endif
-
-100I1 | 100I1   | S
-100I2 | 100I2   | S
-100$e | 100$e   | Table ('Funktiotermien_lyhennys.tbl')
-100$? | 100$?   | S
-
-110I1 | 110I1   | S
-110I2 | 110I2   | S
-110$e | 110$e   | Table ('Funktiotermien_lyhennys.tbl')
-110$? | 110$?   | S
-
-111I1 | 111I1   | S
-111I2 | 111I2   | S
-111$e | 111$e   | Table ('Funktiotermien_lyhennys.tbl')
-111$? | 111$?   | S
 
 222I1 | 222I1   | S
 222I2 | 222I2   | S
@@ -124,41 +110,6 @@ Kansalliskirjasto / 4.1.2016 (TV)
 530I2 | 530I2 | S
 530   | 530   | S; RegReplace('Verkkoaineisto', 'Verkkojulkaisu'); \
                    RegReplace('verkkoaineistona', verkkojulkaisuna')
-
-600I1 | 600I1   | S
-600I2 | 600I2   | S
-600$e | 600$e   | Table ('Funktiotermien_lyhennys.tbl')
-600$? | 600$?   | S
-
-610I1 | 610I1   | S
-610I2 | 610I2   | S
-610$e | 610$e   | Table ('Funktiotermien_lyhennys.tbl')
-610$? | 610$?   | S
-
-611I1 | 611I1   | S
-611I2 | 611I2   | S
-611$e | 611$e   | Table ('Funktiotermien_lyhennys.tbl')
-611$? | 611$?   | S
-
-700I1 | 700I1   | S
-700I2 | 700I2   | S
-700$e | 700$e   | Table ('Funktiotermien_lyhennys.tbl')
-700$? | 700$?   | S
-
-710I1 | 710I1   | S
-710I2 | 710I2   | S
-710$e | 710$e   | Table ('Funktiotermien_lyhennys.tbl')
-710$? | 710$?   | S
-
-711I1 | 711I1   | S
-711I2 | 711I2   | S
-711$e | 711$e   | Table ('Funktiotermien_lyhennys.tbl')
-711$? | 711$?   | S
-
-720I1 | 720I1   | S
-720I2 | 720I2   | S
-720$e | 720$e   | Table ('Funktiotermien_lyhennys.tbl')
-720$? | 720$?   | S
 
 76?I1 | 76?I1 | S
 76?I2 | 76?I2 | S
