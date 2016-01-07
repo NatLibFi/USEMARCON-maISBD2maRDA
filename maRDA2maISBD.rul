@@ -1,5 +1,5 @@
 MARC 21 (RDA) --> MARC 21 (ISBD)
-Kansalliskirjasto / 6.1.2016 (TV)
+Kansalliskirjasto / 7.1.2016 (TV)
 
 #define macro LYHENTEET | Replace('painos' By 'p.'); \
                           Replace('karttoja' By 'kartt.'); \
@@ -15,6 +15,10 @@ Kansalliskirjasto / 6.1.2016 (TV)
 001   | <DEL    | S
 
 003   | <DEL    | S
+
+008/1-6/   | 008/1-6/       | S
+008/7/     | 008/7/         | If (S = 't') Then 's' Else S
+008/8-40/  | 008/8-40/      | S
 
 015I1 | 015I1 | S
 015I2 | 015I2 | S
@@ -78,12 +82,22 @@ Kansalliskirjasto / 6.1.2016 (TV)
 264I2 | 260I2    | ' '
 264$a | 260$a    | S; Delete (':', At Ending); Delete (',', At Ending); Delete ('.', At Ending); Delete (';', At Ending)
 264$b | 260$b    | S; Delete (',', At Ending); Delete (':', At Ending); Delete ('.', At Ending); Delete (';', At Ending)
-264$c | 260$c    | S; Delete ('.', At Ending); Delete (';', At Ending); Delete ('['); Delete (']')
 #endif
 
 #if (@264(n)I2 = '3')
 264(n)$a | 260(no)$e    | '(' + S
 264(n)$b | 260(no)$f    | S + ')'
+#endif
+
+// Jos 264$c-kentän toistumiin on kirjattu sama vuosi julkaisu- ja tekijänoikeusvuodeksi --> 264$c '© vuosi'
+
+#if (Exists(@264(2)$c))
+264(1)$c | <X01$c  | If (RegFind(S, '\\d+') >=0 ) Then RegMatch(0)
+X01$c    | 260$c   | If (RegFind(@264(2)$c, '\\d+') >= 0) And (RegMatch(0) = S) Then '© ' + S Else S
+#endif
+
+#if (Not Exists(@264(2)$c))
+264$c | 260$c    | S
 #endif
 
 300I1 | 300I1   | S
