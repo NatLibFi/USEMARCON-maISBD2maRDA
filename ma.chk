@@ -25,7 +25,7 @@ Format checking file
 013*| I1=_ | I2=_ | $6? | $8* | $a? | $b? | $c? | $d* | $e* | $f* | $5* | $9* |
 
 // National Bibliography Number
-015*| I1=_ | I2=_ | $2? | $6? | $8* | $a* | $z* | $5* | $9* |
+015*| I1=_ | I2=_ | $2? | $6? | $8* | $a* | $q* | $z* | $5* | $9* |
 
 // National Bibliographic Agency Control Number
 016*| I1=_7 | I2=_ | $2? | $8* | $a? | $z* | $5* | $9* |
