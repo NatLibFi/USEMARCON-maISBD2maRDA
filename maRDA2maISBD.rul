@@ -1,5 +1,5 @@
 MARC 21 (RDA) --> MARC 21 (ISBD)
-Kansalliskirjasto / 7.1.2016 (TV)
+Kansalliskirjasto / 19.4.2016 (TV)
 
 #define macro LYHENTEET | Replace('painos' By 'p.'); \
                           Replace('karttoja' By 'kartt.'); \
@@ -8,17 +8,36 @@ Kansalliskirjasto / 7.1.2016 (TV)
                           Replace('sivua' By 's.'); \
                           Replace('painos' By 'p.')
 
+#define macro TUNNUKSET | RegReplace(' Oy', ''); \
+                          RegReplace(' A[Bb]', ''); \
+                          RegReplace(' Ltd', '')
+
+#define macro KUSTANNUSOY   | Replace(' Oy' By ''); \
+                              Replace(' Ab' By ''); \
+                              Replace(' AB' By ''); \
+                              Replace(' Ltd' By ''); \
+                              Replace(' Kustannusosakeyhtiö' By ''); \
+                              Replace(' Kustannus' By '')
+
 000/1-18/ | 000/1-18/ | S
 000/19/   | 000/19/ | 'i'
 000/20-24/  | 000/20-24/ | S
 
-001   | <DEL    | S
-
-003   | <DEL    | S
-
 008/1-6/   | 008/1-6/       | S
-008/7/     | 008/7/         | If (S = 't') Then 's' Else S
-008/8-40/  | 008/8-40/      | S
+008/7/     | 008/7/         | Table ('aikaindy.tbl')
+008/8-11/  | 008/8-11/      | S
+
+#if (@008/7/ = 't')
+008/12-15/  | 008/12-15/    | '    '
+#endif
+
+#if (Not @008/7/ = 't')
+008/12-15/  | 008/12-15/    | S
+#endif
+
+008/16-18/ | 008/16-18/     | Table ('maakoodity.tbl')
+008/36-38/ | 008/36-38/     | Table ('kielikoodit.tbl')
+008/39-40/ | 008/39-40/     | '  '
 
 015I1 | 015I1 | S
 015I2 | 015I2 | S
@@ -64,41 +83,53 @@ Kansalliskirjasto / 7.1.2016 (TV)
 250I2 | 250I2   | S
 250   | 250     | LYHENTEET
 
-#if Not (@260(n)I2 = '3')
-260I1 | 260I1    | ' '
-260I2 | 260I2    | ' '
-260$a | 260$a    | S; Delete (':', At Ending); Delete (',', At Ending); Delete ('.', At Ending); Delete (';', At Ending)
-260$b | 260$b    | S; Delete (',', At Ending); Delete (':', At Ending); Delete ('.', At Ending); Delete (';', At Ending)
-260$c | 260$c    | S; Delete ('.', At Ending); Delete (';', At Ending); Delete ('['); Delete (']')
+// VUOSILUVUN VALINTA:
+// 
+//   -jos 264  1 $c:ssä on vuosiluku ilman hakasia otetaan se -> 260 $c
+//   - samoin jos on vain pelkkä 264 1 $c eikä muita 264 $c osakenttiä
+//   -jos 264 1 $c:ssä on vuosiluku hakasissa ja 264 3 $c:ssä vuosi ilman hakasia, 264 3 $c vuosi -> 260 $c
+//   -jos 264 1 $c:ssä on vuosiluku hakasissa, eikä ole 264 3 $c, ja jos 264 4 $c:ssä oleva vuosi on sama kuin 264 1 $c:ssä, copyrightvuosi 264 4 $c:stä -> 260 $c
+
+#if (Not (Exists (@245(1)$n) Or Exists (@245(1)$p))) And (@264(n)I2 = '1') And (Not Exists(@264(2)$c))
+264(n)$c | 260(1)$c    | If ( (RegFind(S, '\\]') < 0) Or (Not Exists(@264(2)$c)) ) Then S; \ 
+                         Delete ('['); Delete (']'); Delete ('.')
 #endif
 
-#if (@260(n)I2 = '3')
-260(n)$a | 260(no)$e    | '(' + S
-260(n)$b | 260(no)$f    | S + ')'
-#endif
-
-#if Not (@264(n)I2 = '3')
 264I1 | 260I1    | ' '
 264I2 | 260I2    | ' '
-264$a | 260$a    | S; Delete (':', At Ending); Delete (',', At Ending); Delete ('.', At Ending); Delete (';', At Ending)
-264$b | 260$b    | S; Delete (',', At Ending); Delete (':', At Ending); Delete ('.', At Ending); Delete (';', At Ending)
-#endif
+264(1)$a | 260$a    | S
+264(1)$b | 260$b    | KUSTANNUSOY 
 
 #if (@264(n)I2 = '3')
-264(n)$a | 260(no)$e    | '(' + S
-264(n)$b | 260(no)$f    | S + ')'
+//264I1    | 260(new)I1     | S
+//264I2    | 260(newest)I2  | '1'
+264(n)$a | 260(no)$e    | If (Not Exists(@264(n)$b)) Then \
+                            '(' + S + ')' \
+                          Else '(' + S; Delete (',')
 #endif
+
+264(2)$b | 260(no)$f    | KUSTANNUSOY; Delete (','); S + ')'
+
+264$c | 260$c     | If (Not Exists(%260)) Then S; Delete ('['); Delete (']'); Delete ('.')
+
+#if (@264I2 = '4')
+264(n)$c | 260(1)$c    | If (RegFind(@264(1)$c, '\\[') >=0) And (Not Exists(@264(2)$c)) And (RegFind(S, '\\d{4}') >= 0) Then '© ' + RegMatch(0)
+#endif
+
+// Jos 264$c-kentän toistumiin on kirjattu sama vuosi julkaisu- ja tekijänoikeusvuodeksi --> 264$c '© vuosi'
+
+264   | 260 | Sort('abcef')
 
 // Jos 264$c-kentän toistumiin on kirjattu sama vuosi julkaisu- ja tekijänoikeusvuodeksi --> 264$c '© vuosi'
 
 #if (Exists(@264(2)$c))
 264(1)$c | <X01$c  | If (RegFind(S, '\\d+') >=0 ) Then RegMatch(0)
-X01$c    | 260$c   | If (RegFind(@264(2)$c, '\\d+') >= 0) And (RegMatch(0) = S) Then '© ' + S Else S
+X01$c    | 260$c   | If (RegFind(@264(2)$c, '\\d+') >= 0) And (RegMatch(0) = S) Then S
 #endif
 
-#if (Not Exists(@264(2)$c))
-264$c | 260$c    | S
-#endif
+264      | 260   | RegReplace('[Kk]ustannuspaikka tuntematon', 'S.l.'); \
+                   RegReplace('[Kk]ustantaja tuntematon', 's.n.'); \
+                   Sort('abcdef')
 
 300I1 | 300I1   | S
 300I2 | 300I2   | S
