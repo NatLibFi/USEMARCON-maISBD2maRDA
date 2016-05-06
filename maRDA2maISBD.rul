@@ -1,12 +1,13 @@
 MARC 21 (RDA) --> MARC 21 (ISBD)
-Kansalliskirjasto / 19.4.2016 (TV)
+Kansalliskirjasto / 6.5.2016 (TV)
 
 #define macro LYHENTEET | Replace('painos' By 'p.'); \
                           Replace('karttoja' By 'kartt.'); \
                           Replace('nuotteja' By 'nuott.'); \
                           Replace('kuvitettu' By 'kuv.'); \
                           Replace('sivua' By 's.'); \
-                          Replace('painos' By 'p.')
+                          Replace('painos' By 'p.'); \
+                          Replace('uudistettu' By 'uud.')
 
 #define macro TUNNUKSET | RegReplace(' Oy', ''); \
                           RegReplace(' A[Bb]', ''); \
@@ -36,6 +37,7 @@ Kansalliskirjasto / 19.4.2016 (TV)
 #endif
 
 008/16-18/ | 008/16-18/     | Table ('maakoodity.tbl')
+008/19-35/ | 008/19-35/     | S
 008/36-38/ | 008/36-38/     | Table ('kielikoodit.tbl')
 008/39-40/ | 008/39-40/     | '  '
 
@@ -81,7 +83,7 @@ Kansalliskirjasto / 19.4.2016 (TV)
 
 250I1 | 250I1   | S
 250I2 | 250I2   | S
-250   | 250     | LYHENTEET
+250   | 250     | LYHENTEET; Replace('..' By '.')
 
 // VUOSILUVUN VALINTA:
 // 
@@ -133,11 +135,16 @@ X01$c    | 260$c   | If (RegFind(@264(2)$c, '\\d+') >= 0) And (RegMatch(0) = S) 
 
 300I1 | 300I1   | S
 300I2 | 300I2   | S
-300   | 300     | LYHENTEET
+300   | 300     | LYHENTEET;
+                  If (RegFind(S, 'numeroimatonta') >= 0) Then {
+                    Replace('numeroimatonta' By '');
+                    RegReplace('\\s+', ' ');
+                    If (RegFind(S, '\\d+') >= 0) Then RegReplace('\\d+', '[' + RegMatch(0) + ']')
+                  }
 
 336I1 | 336I1   | S
 336I2 | 336I2   | S
-336$a | 336$a   | Table ('Sisaltotyypit_336.tbl')
+336$a | 336(1)$a(nso)   | Table ('Sisaltotyypit_336.tbl')
 336$b | <DEL    | S
 336$2 | <DEL    | S
 
@@ -154,7 +161,7 @@ X01$c    | 260$c   | If (RegFind(@264(2)$c, '\\d+') >= 0) And (RegMatch(0) = S) 
 530I1 | 530I1 | S
 530I2 | 530I2 | S
 530   | 530   | S; RegReplace('Verkkoaineisto', 'Verkkojulkaisu'); \
-                   RegReplace('verkkoaineistona', verkkojulkaisuna')
+                   RegReplace('verkkoaineistona', 'verkkojulkaisuna')
 
 76?I1 | 76?I1 | S
 76?I2 | 76?I2 | S
