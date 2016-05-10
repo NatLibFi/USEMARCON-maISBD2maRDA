@@ -1,5 +1,5 @@
 MARC 21 (RDA) --> MARC 21 (ISBD)
-Kansalliskirjasto / 6.5.2016 (TV)
+Kansalliskirjasto / 10.5.2016 (TV)
 
 #define macro LYHENTEET | Replace('painos' By 'p.'); \
                           Replace('karttoja' By 'kartt.'); \
@@ -136,11 +136,12 @@ X01$c    | 260$c   | If (RegFind(@264(2)$c, '\\d+') >= 0) And (RegMatch(0) = S) 
 300I1 | 300I1   | S
 300I2 | 300I2   | S
 300   | 300     | LYHENTEET;
-                  If (RegFind(S, 'numeroimatonta') >= 0) Then {
-                    Replace('numeroimatonta' By '');
-                    RegReplace('\\s+', ' ');
-                    If (RegFind(S, '\\d+') >= 0) Then RegReplace('\\d+', '[' + RegMatch(0) + ']')
-                  }
+                  If (RegFind(S, 'numeroimatonta') >= 0) Then 
+                  {
+                      Replace('numeroimatonta' By '');
+                      RegReplace('\\s+', ' ');
+                      If (RegFind(S, '\\d+') >= 0) Then RegReplace('\\d+', '[' + RegMatch(0) + ']');
+                  } Else S
 
 336I1 | 336I1   | S
 336I2 | 336I2   | S
