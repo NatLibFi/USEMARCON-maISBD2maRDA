@@ -1,5 +1,5 @@
 MARC 21 (RDA) --> MARC 21 (ISBD)
-Kansalliskirjasto / 3.6.2016 (TV)
+Kansalliskirjasto / 3.6.2016 (TV) (13.6.2016 UI)
 
 #define macro LYHENTEET | Replace('painos' By 'p.'); \
                           Replace('karttoja' By 'kartt.'); \
@@ -94,7 +94,7 @@ Kansalliskirjasto / 3.6.2016 (TV)
 264(1)$b | 260$b    | KUSTANNUSOY 
 
 #if (@264I2 = '1')
-264(n)$c | 260(1)$c    | S; Delete ('['); Delete (']'); Delete ('.')
+264(n)$c | 260(1)$c    | S; Delete ('.')
 #endif
 
 #if (@264I2 = '3')
