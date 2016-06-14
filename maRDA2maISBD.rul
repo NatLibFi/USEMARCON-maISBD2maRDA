@@ -24,6 +24,7 @@ Kansalliskirjasto / 3.6.2016 (TV) (13.6.2016 UI)
                               RegReplace('[Kk]ustannuspaikka tuntematon', 'S.l.'); \
                               RegReplace('[Kk]ustantaja tuntematon', 's.n.')
 
+000/1-18/  | 000/1-18/ | S
 000/19/   | 000/19/ | 'i'
 000/20-24/  | 000/20-24/ | S
 
@@ -32,7 +33,7 @@ Kansalliskirjasto / 3.6.2016 (TV) (13.6.2016 UI)
 008/8-11/  | 008/8-11/      | S
 
 #if (@008/7/ = 't')
-008/12-15/  | 008/12-15/    | '    '
+008/12-15/  | 008/12-15/    | '^^^^'
 #endif
 
 #if (Not @008/7/ = 't')
@@ -42,7 +43,7 @@ Kansalliskirjasto / 3.6.2016 (TV) (13.6.2016 UI)
 008/16-18/ | 008/16-18/     | Table ('maakoodity.tbl')
 008/19-35/ | 008/19-35/     | S
 008/36-38/ | 008/36-38/     | Table ('kielikoodit.tbl')
-008/39-40/ | 008/39-40/     | '  '
+008/39-40/ | 008/39-40/     | '^^'
 
 015I1 | 015I1 | S
 015I2 | 015I2 | S
